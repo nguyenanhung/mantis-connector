@@ -14,7 +14,7 @@ $connect->debugStatus = TRUE;
 $connect->loggerPath  = testLogPath();
 $connect->__construct();
 
-$connect
+$result = $connect
     ->setMonitorUrl('')
     ->setMonitorUser()
     ->setMonitorPassword()
@@ -28,3 +28,4 @@ $connect
         60
     );
 
+d($result);
