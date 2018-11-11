@@ -15,11 +15,11 @@ $connect->loggerPath  = testLogPath();
 $connect->__construct();
 
 $result = $connect
-    ->setMonitorUrl('')
-    ->setMonitorUser()
-    ->setMonitorPassword()
-    ->setProjectId()
-    ->setUsername()
+    ->setMonitorUrl('http://xxxx.mantis.com/api/soap/mantisconnect.php?wsdl')
+    ->setMonitorUser('td_report_mantis')
+    ->setMonitorPassword('td_report_mantis_password')
+    ->setProjectId(30)
+    ->setUsername('user_name_nhan_report')
     ->mantis(
         'Đây là con bug khủng',
         'Nội dung mô tả bug',
