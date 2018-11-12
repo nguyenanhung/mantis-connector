@@ -23,7 +23,7 @@
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "nguyenanhung/requests": "v0.1.3.13"
+        "nguyenanhung/requests": "^0.1"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"

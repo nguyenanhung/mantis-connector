@@ -17,7 +17,7 @@ namespace nguyenanhung\MantisBT\Interfaces;
  */
 interface ProjectInterface
 {
-    const VERSION             = '1.0.0';
+    const VERSION             = '1.0.1';
     const LAST_MODIFIED       = '2018-11-11';
     const AUTHOR_NAME         = 'Hung Nguyen';
     const AUTHOR_EMAIL        = 'dev@nguyenanhung.com';
