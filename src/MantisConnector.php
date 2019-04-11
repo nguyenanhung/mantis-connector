@@ -12,8 +12,6 @@ namespace nguyenanhung\MantisBT;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyDebug\Benchmark;
 use nguyenanhung\MyRequests\SoapRequest;
-use nguyenanhung\MantisBT\Interfaces\ProjectInterface;
-use nguyenanhung\MantisBT\Interfaces\MantisConnectorInterface;
 
 /**
  * Class MantisConnector
@@ -22,7 +20,7 @@ use nguyenanhung\MantisBT\Interfaces\MantisConnectorInterface;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class MantisConnector implements ProjectInterface, MantisConnectorInterface
+class MantisConnector implements MantisConnectorInterface
 {
     public $debugStatus = FALSE;
     public $debugLevel  = NULL;
