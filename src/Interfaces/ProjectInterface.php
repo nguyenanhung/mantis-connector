@@ -17,8 +17,8 @@ namespace nguyenanhung\MantisBT\Interfaces;
  */
 interface ProjectInterface
 {
-    const VERSION             = '1.0.3';
-    const LAST_MODIFIED       = '2018-12-18';
+    const VERSION             = '1.0.4';
+    const LAST_MODIFIED       = '2019-04-11';
     const AUTHOR_NAME         = 'Hung Nguyen';
     const AUTHOR_EMAIL        = 'dev@nguyenanhung.com';
     const PROJECT_NAME        = 'Mantis Bug Tracker Connector';

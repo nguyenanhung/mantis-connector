@@ -92,6 +92,5 @@ interface MantisConnectorInterface
      *
      * @return mixed
      */
-    public function mantis($summary = 'Bug', $description = 'Bug', $category = 'General', $priority = 40, $severity = 60
-    );
+    public function mantis($summary = 'Bug', $description = 'Bug', $category = 'General', $priority = 40, $severity = 60);
 }

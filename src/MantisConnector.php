@@ -28,7 +28,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public $debugLevel  = NULL;
     public $loggerPath  = NULL;
     /** @var object \nguyenanhung\MyDebug\Debug */
-    private $debug;
+    private $logger;
     /** @var object \nguyenanhung\MyDebug\Benchmark */
     private $benchmark;
     private $projectId       = NULL;
@@ -46,19 +46,18 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
             $this->benchmark = new Benchmark();
             $this->benchmark->mark('code_start');
         }
-        $this->debug = new Debug();
-        $this->debug->setLoggerSubPath(__CLASS__);
+        $this->logger = new Debug();
+        $this->logger->setLoggerSubPath(__CLASS__);
         if ($this->debugStatus === TRUE) {
-            $this->debug->setDebugStatus($this->debugStatus);
-            if (!empty($this->debugLevel)) {
-                $this->debug->setGlobalLoggerLevel($this->debugLevel);
+            $this->logger->setDebugStatus($this->debugStatus);
+            if (!empty($this->loggerLevel)) {
+                $this->logger->setGlobalLoggerLevel($this->loggerLevel);
             }
             if (!empty($this->loggerPath)) {
-                $this->debug->setLoggerPath($this->loggerPath);
+                $this->logger->setLoggerPath($this->loggerPath);
             }
         }
-        $this->debug->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
-        $this->debug->debug(__FUNCTION__, '/-----------------------> Begin Logger - Mantis Connector - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <-----------------------\\');
+        $this->logger->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
     }
 
     /**
@@ -68,10 +67,9 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     {
         if (self::USE_BENCHMARK === TRUE) {
             $this->benchmark->mark('code_end');
-            $this->debug->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
-            $this->debug->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
+            $this->logger->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
+            $this->logger->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
         }
-        $this->debug->debug(__FUNCTION__, '/-----------------------> Begin Logger - Mantis Connector - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <-----------------------\\');
     }
 
     /**
@@ -100,7 +98,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public function setMonitorUrl($monitorUrl = '')
     {
         $this->monitorUrl = $monitorUrl;
-        $this->debug->debug(__FUNCTION__, 'setMonitorUrl: ', $this->monitorUrl);
+        $this->logger->debug(__FUNCTION__, 'setMonitorUrl: ', $this->monitorUrl);
 
         return $this;
     }
@@ -118,7 +116,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public function setMonitorUser($monitorUser = '')
     {
         $this->monitorUser = $monitorUser;
-        $this->debug->debug(__FUNCTION__, 'setMonitorUser: ', $this->monitorUser);
+        $this->logger->debug(__FUNCTION__, 'setMonitorUser: ', $this->monitorUser);
 
         return $this;
     }
@@ -136,7 +134,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public function setMonitorPassword($monitorPassword = '')
     {
         $this->monitorPassword = $monitorPassword;
-        $this->debug->debug(__FUNCTION__, 'setMonitorPassword: ', $this->monitorPassword);
+        $this->logger->debug(__FUNCTION__, 'setMonitorPassword: ', $this->monitorPassword);
 
         return $this;
     }
@@ -154,7 +152,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public function setProjectId($projectId = '')
     {
         $this->projectId = $projectId;
-        $this->debug->info(__FUNCTION__, 'setProjectId: ', $this->projectId);
+        $this->logger->info(__FUNCTION__, 'setProjectId: ', $this->projectId);
 
         return $this;
     }
@@ -172,7 +170,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
     public function setUsername($username = '')
     {
         $this->username = $username;
-        $this->debug->debug(__FUNCTION__, 'setUsername: ', $this->username);
+        $this->logger->debug(__FUNCTION__, 'setUsername: ', $this->username);
 
         return $this;
     }
@@ -206,21 +204,11 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
             $category = 'General';
         }
         $issue_data = [
-            'project'         => [
-                'id' => $this->projectId
-            ],
-            'priority'        => [
-                'id' => $priority
-            ],
-            'severity'        => [
-                'id' => $severity
-            ],
-            'handler'         => [
-                'name' => $this->username
-            ],
-            'reproducibility' => [
-                'id' => 10
-            ],
+            'project'         => ['id' => $this->projectId],
+            'priority'        => ['id' => $priority],
+            'severity'        => ['id' => $severity],
+            'handler'         => ['name' => $this->username],
+            'reproducibility' => ['id' => 10],
             'category'        => $category,
             'summary'         => $summary,
             'description'     => $desc
@@ -240,7 +228,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
             $soap->setCallFunction('mc_issue_add');
             $soap->setData($data);
             $result = $soap->clientRequestWsdl();
-            $this->debug->debug(__FUNCTION__, 'Result from Mantis Tracking: ', $result);
+            $this->logger->debug(__FUNCTION__, 'Result from Mantis Tracking: ', $result);
             if (isset($result['data']) && is_integer($result['data'])) {
                 return TRUE;
             } else {
@@ -249,7 +237,7 @@ class MantisConnector implements ProjectInterface, MantisConnectorInterface
         }
         catch (\Exception $e) {
             $error_message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $error_message);
+            $this->logger->error(__FUNCTION__, $error_message);
             $result = NULL;
         }
 
