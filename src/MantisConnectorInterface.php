@@ -18,25 +18,15 @@ namespace nguyenanhung\MantisBT;
  */
 interface MantisConnectorInterface
 {
-    const VERSION             = '1.0.5';
-    const LAST_MODIFIED       = '2019-04-11';
-    const AUTHOR_NAME         = 'Hung Nguyen';
-    const AUTHOR_EMAIL        = 'dev@nguyenanhung.com';
-    const PROJECT_NAME        = 'Mantis Bug Tracker Connector';
-    const TIMEZONE            = 'Asia/Ho_Chi_Minh';
-    const REQUEST_TIMEOUT     = 60;
-    const EXIT_SUCCESS        = 0; // no errors
-    const EXIT_ERROR          = 1; // generic error
-    const EXIT_CONFIG         = 3; // configuration error
-    const EXIT_UNKNOWN_FILE   = 4; // file not found
-    const EXIT_UNKNOWN_CLASS  = 5; // unknown class
-    const EXIT_UNKNOWN_METHOD = 6; // unknown class member
-    const EXIT_USER_INPUT     = 7; // invalid user input
-    const EXIT_DATABASE       = 8; // database error
-    const EXIT__AUTO_MIN      = 9; // lowest automatically-assigned error code
-    const EXIT__AUTO_MAX      = 125; // highest automatically-assigned error code
-    const USE_BENCHMARK       = FALSE;
-    const USE_DEBUG           = FALSE;
+    const VERSION       = '1.0.6';
+    const LAST_MODIFIED = '2020-02-10';
+    const AUTHOR_NAME   = 'Hung Nguyen';
+    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
+    const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
+    const TIMEZONE      = 'Asia/Ho_Chi_Minh';
+    const SOAP_ENCODING = 'utf-8';
+    const XML_ENCODING  = 'utf-8';
+    const DECODE_UTF8   = FALSE;
 
     /**
      * Hàm lấy thông tin phiên bản Package
@@ -114,11 +104,11 @@ interface MantisConnectorInterface
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/8/18 19:16
      *
-     * @param string $summary
-     * @param string $description
-     * @param string $category
-     * @param int    $priority
-     * @param int    $severity
+     * @param string $summary     Thông tin Bug
+     * @param string $description Thông tin chi tiết
+     * @param string $category    Phân loại bug
+     * @param int    $priority    Trọng số ưu tiên
+     * @param int    $severity    Level lỗi
      *
      * @return mixed
      */

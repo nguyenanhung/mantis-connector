@@ -23,7 +23,7 @@
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "nguyenanhung/requests": "^1.0"
+        "nguyenanhung/nusoap": "v0.9.5.6"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"
@@ -31,6 +31,9 @@
     "autoload": {
         "psr-4": {
             "nguyenanhung\\MantisBT\\": "src/"
-        }
+        },
+        "files": [
+            "helpers/mantis.php"
+        ]
     }
 }

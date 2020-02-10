@@ -9,9 +9,8 @@
 
 namespace nguyenanhung\MantisBT;
 
-use nguyenanhung\MyDebug\Debug;
-use nguyenanhung\MyDebug\Benchmark;
-use nguyenanhung\MyRequests\SoapRequest;
+use Exception;
+use nguyenanhung\MyNuSOAP\nusoap_client;
 
 /**
  * Class MantisConnector
@@ -22,12 +21,10 @@ use nguyenanhung\MyRequests\SoapRequest;
  */
 class MantisConnector implements MantisConnectorInterface
 {
-    public $debugStatus = FALSE;
-    public $debugLevel  = NULL;
-    public $loggerPath  = NULL;
-    /** @var object \nguyenanhung\MyDebug\Debug */
+    public  $debugStatus     = FALSE;
+    public  $debugLevel      = NULL;
+    public  $loggerPath      = NULL;
     private $logger;
-    /** @var object \nguyenanhung\MyDebug\Benchmark */
     private $benchmark;
     private $projectId       = NULL;
     private $username        = NULL;
@@ -37,46 +34,21 @@ class MantisConnector implements MantisConnectorInterface
 
     /**
      * MantisConnector constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
      */
     public function __construct()
     {
-        if (self::USE_BENCHMARK === TRUE) {
-            $this->benchmark = new Benchmark();
-            $this->benchmark->mark('code_start');
-        }
-        $this->logger = new Debug();
-        $this->logger->setLoggerSubPath(__CLASS__);
-        if ($this->debugStatus === TRUE) {
-            $this->logger->setDebugStatus($this->debugStatus);
-            if (!empty($this->loggerLevel)) {
-                $this->logger->setGlobalLoggerLevel($this->loggerLevel);
-            }
-            if (!empty($this->loggerPath)) {
-                $this->logger->setLoggerPath($this->loggerPath);
-            }
-        }
-        $this->logger->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
-    }
-
-    /**
-     * MantisConnector destructor.
-     */
-    public function __destruct()
-    {
-        if (self::USE_BENCHMARK === TRUE) {
-            $this->benchmark->mark('code_end');
-            $this->logger->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
-            $this->logger->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
-        }
     }
 
     /**
      * Function getVersion
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:50
-     *
      * @return mixed|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 57:44
      */
     public function getVersion()
     {
@@ -84,19 +56,83 @@ class MantisConnector implements MantisConnectorInterface
     }
 
     /**
-     * Function setMonitorUrl
+     * Function Benchmark
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:50
+     * @return mixed
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getBenchmark()
+    {
+        return $this->benchmark;
+    }
+
+    /**
+     * Function Logger
+     *
+     * @return mixed
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * Function DebugLevel
+     *
+     * @return null
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getDebugLevel()
+    {
+        return $this->debugLevel;
+    }
+
+    /**
+     * Function LoggerPath
+     *
+     * @return null
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getLoggerPath()
+    {
+        return $this->loggerPath;
+    }
+
+    /**
+     * Function DebugStatus
+     *
+     * @return bool
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function isDebugStatus()
+    {
+        return $this->debugStatus;
+    }
+
+    /**
+     * Function setMonitorUrl
      *
      * @param string $monitorUrl
      *
      * @return $this|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 58:44
      */
     public function setMonitorUrl($monitorUrl = '')
     {
         $this->monitorUrl = $monitorUrl;
-        $this->logger->debug(__FUNCTION__, 'setMonitorUrl: ', $this->monitorUrl);
 
         return $this;
     }
@@ -104,17 +140,16 @@ class MantisConnector implements MantisConnectorInterface
     /**
      * Function setMonitorUser
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:51
-     *
      * @param string $monitorUser
      *
      * @return $this|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 58:55
      */
     public function setMonitorUser($monitorUser = '')
     {
         $this->monitorUser = $monitorUser;
-        $this->logger->debug(__FUNCTION__, 'setMonitorUser: ', $this->monitorUser);
 
         return $this;
     }
@@ -122,17 +157,16 @@ class MantisConnector implements MantisConnectorInterface
     /**
      * Function setMonitorPassword
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:51
-     *
      * @param string $monitorPassword
      *
      * @return $this|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 58:59
      */
     public function setMonitorPassword($monitorPassword = '')
     {
         $this->monitorPassword = $monitorPassword;
-        $this->logger->debug(__FUNCTION__, 'setMonitorPassword: ', $this->monitorPassword);
 
         return $this;
     }
@@ -140,17 +174,16 @@ class MantisConnector implements MantisConnectorInterface
     /**
      * Function setProjectId
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:51
-     *
      * @param string $projectId
      *
      * @return $this|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 59:08
      */
     public function setProjectId($projectId = '')
     {
         $this->projectId = $projectId;
-        $this->logger->info(__FUNCTION__, 'setProjectId: ', $this->projectId);
 
         return $this;
     }
@@ -158,17 +191,16 @@ class MantisConnector implements MantisConnectorInterface
     /**
      * Function setUsername
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:52
-     *
      * @param string $username
      *
      * @return $this|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 59:18
      */
     public function setUsername($username = '')
     {
         $this->username = $username;
-        $this->logger->debug(__FUNCTION__, 'setUsername: ', $this->username);
 
         return $this;
     }
@@ -176,16 +208,16 @@ class MantisConnector implements MantisConnectorInterface
     /**
      * Function mantis
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/11/18 13:52
-     *
-     * @param string $summary
-     * @param string $desc
-     * @param string $category
-     * @param int    $priority
-     * @param int    $severity
+     * @param string $summary  Thông tin Bug
+     * @param string $desc     Thông tin chi tiết
+     * @param string $category Phân loại bug
+     * @param int    $priority Trọng số ưu tiên
+     * @param int    $severity Level lỗi
      *
      * @return array|bool|mixed|null|string TRUE là thành công
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 2/10/20 12:18
      */
     public function mantis($summary = 'Bug', $desc = 'Bug', $category = 'General', $priority = 40, $severity = 60)
     {
@@ -201,41 +233,44 @@ class MantisConnector implements MantisConnectorInterface
         if (empty($category)) {
             $category = 'General';
         }
-        $issue_data = [
-            'project'         => ['id' => $this->projectId],
-            'priority'        => ['id' => $priority],
-            'severity'        => ['id' => $severity],
-            'handler'         => ['name' => $this->username],
-            'reproducibility' => ['id' => 10],
+        $issue_data = array(
+            'project'         => array('id' => $this->projectId),
+            'priority'        => array('id' => $priority),
+            'severity'        => array('id' => $severity),
+            'handler'         => array('name' => $this->username),
+            'reproducibility' => array('id' => 10),
             'category'        => $category,
             'summary'         => $summary,
             'description'     => $desc
-        ];
-        $data       = [
-            'username' => $this->monitorUser,
-            'password' => $this->monitorPassword,
-            'issue'    => $issue_data
-        ];
+        );
+        $data       = array('username' => $this->monitorUser, 'password' => $this->monitorPassword, 'issue' => $issue_data);
         // SOAP Request
         try {
-            $soap                  = new SoapRequest();
-            $soap->debugStatus     = $this->debugStatus;
-            $soap->debugLoggerPath = $this->loggerPath;
-            $soap->__construct();
-            $soap->setEndpoint($this->monitorUrl);
-            $soap->setCallFunction('mc_issue_add');
-            $soap->setData($data);
-            $result = $soap->clientRequestWsdl();
-            $this->logger->debug(__FUNCTION__, 'Result from Mantis Tracking: ', $result);
-            if (isset($result['data']) && is_integer($result['data'])) {
-                return TRUE;
+            $client                   = new nusoap_client($this->monitorUrl, TRUE);
+            $client->soap_defencoding = self::SOAP_ENCODING;
+            $client->xml_encoding     = self::XML_ENCODING;
+            $client->decode_utf8      = self::DECODE_UTF8;
+            $error                    = $client->getError();
+            if ($error) {
+                $error_message = "Client Request WSDL Error: " . json_encode($error);
+                if (function_exists('log_message')) {
+                    log_message('error', $error_message);
+                }
+                $result = FALSE;
             } else {
-                return FALSE;
+                $result = $client->call('mc_issue_add', $data);
+                if (isset($result['data']) && is_integer($result['data'])) {
+                    return TRUE;
+                } else {
+                    return FALSE;
+                }
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $error_message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $error_message);
+            if (function_exists('log_message')) {
+                log_message('error', $error_message);
+            }
             $result = NULL;
         }
 
