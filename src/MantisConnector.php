@@ -233,7 +233,7 @@ class MantisConnector implements MantisConnectorInterface
         if (empty($category)) {
             $category = 'General';
         }
-        $issue_data = array(
+        $issue = array(
             'project'         => array('id' => $this->projectId),
             'priority'        => array('id' => $priority),
             'severity'        => array('id' => $severity),
@@ -243,7 +243,11 @@ class MantisConnector implements MantisConnectorInterface
             'summary'         => $summary,
             'description'     => $desc
         );
-        $data       = array('username' => $this->monitorUser, 'password' => $this->monitorPassword, 'issue' => $issue_data);
+        $data  = array(
+            'username' => $this->monitorUser,
+            'password' => $this->monitorPassword,
+            'issue'    => $issue
+        );
         // SOAP Request
         try {
             $client                   = new nusoap_client($this->monitorUrl, TRUE);
@@ -267,9 +271,9 @@ class MantisConnector implements MantisConnectorInterface
             }
         }
         catch (Exception $e) {
-            $error_message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             if (function_exists('log_message')) {
-                log_message('error', $error_message);
+                log_message('error', 'Error Message: ' . $e->getMessage());
+                log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }
             $result = NULL;
         }

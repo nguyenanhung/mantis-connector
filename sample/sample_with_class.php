@@ -17,7 +17,6 @@ $config = array(
     'monitorProjectId' => 1,
     'monitorUsername'  => 'hungna',
 );
-
 $base = new nguyenanhung\MantisBT\MantisConnector();
 $base->setMonitorUrl($config['monitorUrl'])->setMonitorUser($config['monitorUser'])->setMonitorPassword($config['monitorPassword'])->setProjectId($config['monitorProjectId'])->setUsername($config['monitorUsername']);
 $result = $base->mantis('Tên bug', 'Mô tả bug');

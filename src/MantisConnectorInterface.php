@@ -18,8 +18,8 @@ namespace nguyenanhung\MantisBT;
  */
 interface MantisConnectorInterface
 {
-    const VERSION       = '1.0.6';
-    const LAST_MODIFIED = '2020-02-10';
+    const VERSION       = '1.0.7';
+    const LAST_MODIFIED = '2020-08-13';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
@@ -37,6 +37,56 @@ interface MantisConnectorInterface
      * @return mixed|string Current Project Version, VD: 0.1.0
      */
     public function getVersion();
+
+    /**
+     * Function Benchmark
+     *
+     * @return mixed
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getBenchmark();
+
+    /**
+     * Function Logger
+     *
+     * @return mixed
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getLogger();
+
+    /**
+     * Function DebugLevel
+     *
+     * @return null
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getDebugLevel();
+
+    /**
+     * Function LoggerPath
+     *
+     * @return null
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function getLoggerPath();
+
+    /**
+     * Function DebugStatus
+     *
+     * @return bool
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function isDebugStatus();
 
     /**
      * Function setMonitorUrl
