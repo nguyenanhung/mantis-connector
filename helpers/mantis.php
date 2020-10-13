@@ -27,8 +27,7 @@ if (!function_exists('mantis_report')) {
     {
         $base = new nguyenanhung\MantisBT\MantisConnector();
         $base->setMonitorUrl($config['monitorUrl'])->setMonitorUser($config['monitorUser'])->setMonitorPassword($config['monitorPassword'])->setProjectId($config['monitorProjectId'])->setUsername($config['monitorUsername']);
-        $result = $base->mantis($summary, $desc, $category, $priority, $severity);
 
-        return $result;
+        return $base->mantis($summary, $desc, $category, $priority, $severity);
     }
 }
