@@ -1,3 +1,12 @@
+
+[![Latest Stable Version](https://poser.pugx.org/nguyenanhung/mantis-connector/v)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![Latest Unstable Version](https://poser.pugx.org/nguyenanhung/mantis-connector/v/unstable)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![Total Downloads](https://poser.pugx.org/nguyenanhung/mantis-connector/downloads)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![License](https://poser.pugx.org/nguyenanhung/mantis-connector/license)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![Monthly Downloads](https://poser.pugx.org/nguyenanhung/mantis-connector/d/monthly)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![Daily Downloads](https://poser.pugx.org/nguyenanhung/mantis-connector/d/daily)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+[![composer.lock](https://poser.pugx.org/nguyenanhung/mantis-connector/composerlock)](https://packagist.org/packages/nguyenanhung/mantis-connector)
+
 # Mantis Bug Tracker Connector
 
 Hướng dẫn sử dụng
