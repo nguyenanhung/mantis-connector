@@ -19,8 +19,18 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class MantisConnector implements MantisConnectorInterface
+class MantisConnector
 {
+    const VERSION       = '1.0.8';
+    const LAST_MODIFIED = '2020-10-13';
+    const AUTHOR_NAME   = 'Hung Nguyen';
+    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
+    const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
+    const TIMEZONE      = 'Asia/Ho_Chi_Minh';
+    const SOAP_ENCODING = 'utf-8';
+    const XML_ENCODING  = 'utf-8';
+    const DECODE_UTF8   = FALSE;
+
     public  $debugStatus     = FALSE;
     public  $debugLevel      = NULL;
     public  $loggerPath      = NULL;
@@ -214,10 +224,10 @@ class MantisConnector implements MantisConnectorInterface
      * @param int    $priority Trọng số ưu tiên
      * @param int    $severity Level lỗi
      *
-     * @return array|bool|mixed|null|string TRUE là thành công
+     * @return bool|string TRUE là thành công
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 12:18
+     * @time     : 10/13/2020 19:43
      */
     public function mantis($summary = 'Bug', $desc = 'Bug', $category = 'General', $priority = 40, $severity = 60)
     {
@@ -233,21 +243,21 @@ class MantisConnector implements MantisConnectorInterface
         if (empty($category)) {
             $category = 'General';
         }
-        $issue = array(
-            'project'         => array('id' => $this->projectId),
-            'priority'        => array('id' => $priority),
-            'severity'        => array('id' => $severity),
-            'handler'         => array('name' => $this->username),
-            'reproducibility' => array('id' => 10),
+        $issue = [
+            'project'         => ['id' => $this->projectId],
+            'priority'        => ['id' => $priority],
+            'severity'        => ['id' => $severity],
+            'handler'         => ['name' => $this->username],
+            'reproducibility' => ['name' => 'always'],
             'category'        => $category,
             'summary'         => $summary,
             'description'     => $desc
-        );
-        $data  = array(
+        ];
+        $data  = [
             'username' => $this->monitorUser,
             'password' => $this->monitorPassword,
             'issue'    => $issue
-        );
+        ];
         // SOAP Request
         try {
             $client                   = new nusoap_client($this->monitorUrl, TRUE);
@@ -260,10 +270,10 @@ class MantisConnector implements MantisConnectorInterface
                 if (function_exists('log_message')) {
                     log_message('error', $error_message);
                 }
-                $result = FALSE;
+                $result = $error_message;
             } else {
                 $result = $client->call('mc_issue_add', $data);
-                if (isset($result['data']) && is_integer($result['data'])) {
+                if (isset($result) && is_integer($result)) {
                     return TRUE;
                 } else {
                     return FALSE;
@@ -275,7 +285,7 @@ class MantisConnector implements MantisConnectorInterface
                 log_message('error', 'Error Message: ' . $e->getMessage());
                 log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }
-            $result = NULL;
+            $result = $e->getMessage();
         }
 
         return $result;
