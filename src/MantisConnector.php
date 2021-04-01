@@ -21,8 +21,8 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.0.8';
-    const LAST_MODIFIED = '2020-10-13';
+    const VERSION       = '1.0.9';
+    const LAST_MODIFIED = '2021-04-01';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
@@ -234,15 +234,7 @@ class MantisConnector
         if (empty($desc)) {
             $desc = $summary;
         }
-        if (empty($priority)) {
-            $priority = 40;
-        }
-        if (empty($severity)) {
-            $severity = 60;
-        }
-        if (empty($category)) {
-            $category = 'General';
-        }
+
         $issue = [
             'project'         => ['id' => $this->projectId],
             'priority'        => ['id' => $priority],
@@ -253,12 +245,8 @@ class MantisConnector
             'summary'         => $summary,
             'description'     => $desc
         ];
-        $data  = [
-            'username' => $this->monitorUser,
-            'password' => $this->monitorPassword,
-            'issue'    => $issue
-        ];
-        // SOAP Request
+        $data  = ['username' => $this->monitorUser, 'password' => $this->monitorPassword, 'issue' => $issue];
+
         try {
             $client                   = new nusoap_client($this->monitorUrl, TRUE);
             $client->soap_defencoding = self::SOAP_ENCODING;
@@ -266,28 +254,27 @@ class MantisConnector
             $client->decode_utf8      = self::DECODE_UTF8;
             $error                    = $client->getError();
             if ($error) {
-                $error_message = "Client Request WSDL Error: " . json_encode($error);
+                $errorMessage = "Client Request WSDL Error: " . json_encode($error);
                 if (function_exists('log_message')) {
-                    log_message('error', $error_message);
+                    log_message('error', $errorMessage);
                 }
-                $result = $error_message;
-            } else {
-                $result = $client->call('mc_issue_add', $data);
-                if (isset($result) && is_integer($result)) {
-                    return TRUE;
-                } else {
-                    return FALSE;
-                }
+
+                return $errorMessage;
             }
+            $result = $client->call('mc_issue_add', $data);
+            if (isset($result) && is_integer($result)) {
+                return TRUE;
+            }
+
+            return FALSE;
         }
         catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
                 log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }
-            $result = $e->getMessage();
-        }
 
-        return $result;
+            return $e->getMessage();
+        }
     }
 }
