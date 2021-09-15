@@ -21,8 +21,8 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.0.9';
-    const LAST_MODIFIED = '2021-04-01';
+    const VERSION       = '1.0.10';
+    const LAST_MODIFIED = '2021-09-16';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
@@ -34,13 +34,13 @@ class MantisConnector
     public  $debugStatus     = FALSE;
     public  $debugLevel      = NULL;
     public  $loggerPath      = NULL;
-    private $logger;
-    private $benchmark;
-    private $projectId       = NULL;
-    private $username        = NULL;
-    private $monitorUrl      = NULL;
-    private $monitorUser     = NULL;
-    private $monitorPassword = NULL;
+    protected $logger;
+    protected $benchmark;
+    protected $projectId       = NULL;
+    protected $username        = NULL;
+    protected $monitorUrl      = NULL;
+    protected $monitorUser     = NULL;
+    protected $monitorPassword = NULL;
 
     /**
      * MantisConnector constructor.
