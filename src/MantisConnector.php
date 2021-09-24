@@ -60,7 +60,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 35:04
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return self::VERSION;
     }
@@ -125,7 +125,7 @@ class MantisConnector
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      */
-    public function isDebugStatus()
+    public function isDebugStatus(): bool
     {
         return $this->debugStatus;
     }
@@ -140,7 +140,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 36:02
      */
-    public function setMonitorUrl($monitorUrl = '')
+    public function setMonitorUrl(string $monitorUrl = ''): MantisConnector
     {
         $this->monitorUrl = $monitorUrl;
 
@@ -157,7 +157,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 35:59
      */
-    public function setMonitorUser($monitorUser = '')
+    public function setMonitorUser(string $monitorUser = ''): MantisConnector
     {
         $this->monitorUser = $monitorUser;
 
@@ -174,7 +174,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 35:57
      */
-    public function setMonitorPassword($monitorPassword = '')
+    public function setMonitorPassword(string $monitorPassword = ''): MantisConnector
     {
         $this->monitorPassword = $monitorPassword;
 
@@ -191,7 +191,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 35:54
      */
-    public function setProjectId($projectId = '')
+    public function setProjectId(string $projectId = ''): MantisConnector
     {
         $this->projectId = $projectId;
 
@@ -208,7 +208,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 35:51
      */
-    public function setUsername($username = '')
+    public function setUsername(string $username = ''): MantisConnector
     {
         $this->username = $username;
 
@@ -229,7 +229,7 @@ class MantisConnector
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/13/2020 19:43
      */
-    public function mantis($summary = 'Bug', $desc = 'Bug', $category = 'General', $priority = 40, $severity = 60)
+    public function mantis(string $summary = 'Bug', string $desc = 'Bug', string $category = 'General', int $priority = 40, int $severity = 60)
     {
         if (empty($desc)) {
             $desc = $summary;
