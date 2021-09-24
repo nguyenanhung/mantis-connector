@@ -21,26 +21,26 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.1.0';
-    const LAST_MODIFIED = '2021-09-16';
+    const VERSION       = '1.1.1';
+    const LAST_MODIFIED = '2021-09-24';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
     const TIMEZONE      = 'Asia/Ho_Chi_Minh';
     const SOAP_ENCODING = 'utf-8';
     const XML_ENCODING  = 'utf-8';
-    const DECODE_UTF8   = FALSE;
+    const DECODE_UTF8   = false;
 
-    public  $debugStatus     = FALSE;
-    public  $debugLevel      = NULL;
-    public  $loggerPath      = NULL;
+    public    $debugStatus = false;
+    public    $debugLevel;
+    public    $loggerPath;
     protected $logger;
     protected $benchmark;
-    protected $projectId       = NULL;
-    protected $username        = NULL;
-    protected $monitorUrl      = NULL;
-    protected $monitorUser     = NULL;
-    protected $monitorPassword = NULL;
+    protected $projectId;
+    protected $username;
+    protected $monitorUrl;
+    protected $monitorUser;
+    protected $monitorPassword;
 
     /**
      * MantisConnector constructor.
@@ -55,10 +55,10 @@ class MantisConnector
     /**
      * Function getVersion
      *
-     * @return mixed|string
+     * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 57:44
+     * @time     : 09/24/2021 35:04
      */
     public function getVersion()
     {
@@ -135,10 +135,10 @@ class MantisConnector
      *
      * @param string $monitorUrl
      *
-     * @return $this|mixed
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 58:44
+     * @time     : 09/24/2021 36:02
      */
     public function setMonitorUrl($monitorUrl = '')
     {
@@ -152,10 +152,10 @@ class MantisConnector
      *
      * @param string $monitorUser
      *
-     * @return $this|mixed
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 58:55
+     * @time     : 09/24/2021 35:59
      */
     public function setMonitorUser($monitorUser = '')
     {
@@ -169,10 +169,10 @@ class MantisConnector
      *
      * @param string $monitorPassword
      *
-     * @return $this|mixed
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 58:59
+     * @time     : 09/24/2021 35:57
      */
     public function setMonitorPassword($monitorPassword = '')
     {
@@ -186,10 +186,10 @@ class MantisConnector
      *
      * @param string $projectId
      *
-     * @return $this|mixed
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 59:08
+     * @time     : 09/24/2021 35:54
      */
     public function setProjectId($projectId = '')
     {
@@ -203,10 +203,10 @@ class MantisConnector
      *
      * @param string $username
      *
-     * @return $this|mixed
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 59:18
+     * @time     : 09/24/2021 35:51
      */
     public function setUsername($username = '')
     {
@@ -248,7 +248,7 @@ class MantisConnector
         $data  = ['username' => $this->monitorUser, 'password' => $this->monitorPassword, 'issue' => $issue];
 
         try {
-            $client                   = new nusoap_client($this->monitorUrl, TRUE);
+            $client                   = new nusoap_client($this->monitorUrl, true);
             $client->soap_defencoding = self::SOAP_ENCODING;
             $client->xml_encoding     = self::XML_ENCODING;
             $client->decode_utf8      = self::DECODE_UTF8;
@@ -262,13 +262,9 @@ class MantisConnector
                 return $errorMessage;
             }
             $result = $client->call('mc_issue_add', $data);
-            if (isset($result) && is_integer($result)) {
-                return TRUE;
-            }
 
-            return FALSE;
-        }
-        catch (Exception $e) {
+            return isset($result) && is_int($result);
+        } catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
                 log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());

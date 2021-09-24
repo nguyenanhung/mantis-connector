@@ -18,10 +18,10 @@ if (!function_exists('mantis_report')) {
      * @param int    $priority Trọng số ưu tiên
      * @param int    $severity Level lỗi
      *
-     * @return array|bool|mixed|string|null
+     * @return bool|string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 2/10/20 19:55
+     * @time     : 09/24/2021 33:30
      */
     function mantis_report($config = array(), $summary = 'Bug', $desc = 'Bug', $category = 'General', $priority = 40, $severity = 60)
     {

@@ -1,4 +1,3 @@
-
 [![Latest Stable Version](https://poser.pugx.org/nguyenanhung/mantis-connector/v)](https://packagist.org/packages/nguyenanhung/mantis-connector)
 [![Latest Unstable Version](https://poser.pugx.org/nguyenanhung/mantis-connector/v/unstable)](https://packagist.org/packages/nguyenanhung/mantis-connector)
 [![Total Downloads](https://poser.pugx.org/nguyenanhung/mantis-connector/downloads)](https://packagist.org/packages/nguyenanhung/mantis-connector)
@@ -9,9 +8,12 @@
 
 # Mantis Bug Tracker Connector
 
-Hướng dẫn sử dụng
+## Version
 
-### Cài packages vào trong repositories
+- [x] V1.x support all PHP version `>=5.4`
+- [x] V2.x support all PHP version `>=7.0`
+
+## Cài packages vào trong repositories
 
 ```http
 composer require nguyenanhung/mantis-connector
@@ -19,9 +21,7 @@ composer require nguyenanhung/mantis-connector
 
 ## Hướng dẫn sử dụng
 
-
-
-#### Quick Function
+### Quick Function
 
 Tham khảo đoạn code bên dưới
 
@@ -48,9 +48,7 @@ $config = array(
 $result = mantis_report($config, 'Tên bug', 'Mô tả  chi tiết');
 ```
 
-
-
-#### With Class
+### With Class
 
 Tham khảo đoạn code bên dưới
 
@@ -85,7 +83,7 @@ echo "</pre>";
 
 ```
 
-### Liên hệ
+## Liên hệ
 
 | STT  | Họ tên         | SĐT           | Email           | Skype            |
 | ---- | -------------- | ------------- | --------------- | ---------------- |
