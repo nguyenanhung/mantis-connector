@@ -85,6 +85,6 @@ echo "</pre>";
 
 ## Liên hệ
 
-| STT  | Họ tên         | SĐT           | Email           | Skype            |
-| ---- | -------------- | ------------- | --------------- | ---------------- |
-| 1    | Nguyễn An Hưng | 033 295 3760 | hungna@gviet.vn | nguyenanhung5891 |
+| Name        | Email                | Skype            | Facebook      |
+| ----------- | -------------------- | ---------------- | ------------- |
+| Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |

@@ -133,3 +133,5 @@ storage/cache/*
 !storage/cache/index.html
 /tests/demo_production.php
 /sample/sample.php
+
+test.php
