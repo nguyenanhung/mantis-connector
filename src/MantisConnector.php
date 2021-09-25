@@ -21,8 +21,8 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.1.1';
-    const LAST_MODIFIED = '2021-09-24';
+    const VERSION       = '2.0.1';
+    const LAST_MODIFIED = '2021-09-25';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
