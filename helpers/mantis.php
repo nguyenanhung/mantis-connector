@@ -18,7 +18,7 @@ if (!function_exists('mantis_report')) {
      * @param int    $priority Trọng số ưu tiên
      * @param int    $severity Level lỗi
      *
-     * @return bool|string
+     * @return bool
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 33:30

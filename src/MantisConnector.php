@@ -21,8 +21,8 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.1.2';
-    const LAST_MODIFIED = '2021-09-25';
+    const VERSION       = '1.1.3';
+    const LAST_MODIFIED = '2021-10-16';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
@@ -224,7 +224,7 @@ class MantisConnector
      * @param int    $priority Trọng số ưu tiên
      * @param int    $severity Level lỗi
      *
-     * @return bool|string TRUE là thành công
+     * @return bool TRUE là thành công
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/13/2020 19:43
@@ -235,17 +235,31 @@ class MantisConnector
             $desc = $summary;
         }
 
-        $issue = [
-            'project'         => ['id' => $this->projectId],
-            'priority'        => ['id' => $priority],
-            'severity'        => ['id' => $severity],
-            'handler'         => ['name' => $this->username],
-            'reproducibility' => ['name' => 'always'],
+        $issue = array(
+            'project'         => array(
+                'id' => $this->projectId
+            ),
+            'priority'        => array(
+                'id' => $priority
+            ),
+            'severity'        => array(
+                'id' => $severity
+            ),
+            'handler'         => array(
+                'name' => $this->username
+            ),
+            'reproducibility' => array(
+                'name' => 'always'
+            ),
             'category'        => $category,
             'summary'         => $summary,
             'description'     => $desc
-        ];
-        $data  = ['username' => $this->monitorUser, 'password' => $this->monitorPassword, 'issue' => $issue];
+        );
+        $data  = array(
+            'username' => $this->monitorUser,
+            'password' => $this->monitorPassword,
+            'issue'    => $issue
+        );
 
         try {
             $client                   = new nusoap_client($this->monitorUrl, true);
@@ -254,12 +268,11 @@ class MantisConnector
             $client->decode_utf8      = self::DECODE_UTF8;
             $error                    = $client->getError();
             if ($error) {
-                $errorMessage = "Client Request WSDL Error: " . json_encode($error);
                 if (function_exists('log_message')) {
-                    log_message('error', $errorMessage);
+                    log_message('error', "Client Request WSDL Error: " . json_encode($error));
                 }
 
-                return $errorMessage;
+                return false;
             }
             $result = $client->call('mc_issue_add', $data);
 
@@ -270,7 +283,7 @@ class MantisConnector
                 log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }
 
-            return $e->getMessage();
+            return false;
         }
     }
 }
