@@ -31,3 +31,27 @@ if (!function_exists('mantis_report')) {
         return $base->mantis($summary, $desc, $category, $priority, $severity);
     }
 }
+if (!function_exists('setup_mantis_bug_tracker')) {
+    /**
+     * Function setup_mantis_bug_tracker
+     *
+     * @param array $options Mảng cấu hình Monitor
+     *
+     * @return \nguyenanhung\MantisBT\MantisConnector
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 07/03/2023 49:57
+     */
+    function setup_mantis_bug_tracker($options = array())
+    {
+        $mantis = new nguyenanhung\MantisBT\MantisConnector();
+        $mantis->setMonitorUrl($options['monitorUrl']);
+        $mantis->setMonitorUser($options['monitorUser']);
+        $mantis->setMonitorPassword($options['monitorPassword']);
+        $mantis->setProjectId($options['monitorProjectId']);
+        $mantis->setUsername($options['monitorUsername']);
+        $mantis->__construct();
+
+        return $mantis;
+    }
+}

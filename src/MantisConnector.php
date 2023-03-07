@@ -21,19 +21,19 @@ use nguyenanhung\MyNuSOAP\nusoap_client;
  */
 class MantisConnector
 {
-    const VERSION       = '1.1.3';
-    const LAST_MODIFIED = '2021-10-16';
-    const AUTHOR_NAME   = 'Hung Nguyen';
-    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
-    const PROJECT_NAME  = 'Mantis Bug Tracker Connector';
-    const TIMEZONE      = 'Asia/Ho_Chi_Minh';
+    const VERSION = '1.1.4';
+    const LAST_MODIFIED = '2023-03-08';
+    const AUTHOR_NAME = 'Hung Nguyen';
+    const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
+    const PROJECT_NAME = 'Mantis Bug Tracker Connector';
+    const TIMEZONE = 'Asia/Ho_Chi_Minh';
     const SOAP_ENCODING = 'utf-8';
-    const XML_ENCODING  = 'utf-8';
-    const DECODE_UTF8   = false;
+    const XML_ENCODING = 'utf-8';
+    const DECODE_UTF8 = false;
 
-    public    $debugStatus = false;
-    public    $debugLevel;
-    public    $loggerPath;
+    public $debugStatus = false;
+    public $debugLevel;
+    public $loggerPath;
     protected $logger;
     protected $benchmark;
     protected $projectId;
@@ -255,18 +255,18 @@ class MantisConnector
             'summary'         => $summary,
             'description'     => $desc
         );
-        $data  = array(
+        $data = array(
             'username' => $this->monitorUser,
             'password' => $this->monitorPassword,
             'issue'    => $issue
         );
 
         try {
-            $client                   = new nusoap_client($this->monitorUrl, true);
+            $client = new nusoap_client($this->monitorUrl, true);
             $client->soap_defencoding = self::SOAP_ENCODING;
-            $client->xml_encoding     = self::XML_ENCODING;
-            $client->decode_utf8      = self::DECODE_UTF8;
-            $error                    = $client->getError();
+            $client->xml_encoding = self::XML_ENCODING;
+            $client->decode_utf8 = self::DECODE_UTF8;
+            $error = $client->getError();
             if ($error) {
                 if (function_exists('log_message')) {
                     log_message('error', "Client Request WSDL Error: " . json_encode($error));
