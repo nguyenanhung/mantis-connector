@@ -15,7 +15,7 @@
 
 ## Cài packages vào trong repositories
 
-```http
+```shell
 composer require nguyenanhung/mantis-connector
 ```
 
@@ -86,5 +86,5 @@ echo "</pre>";
 ## Liên hệ
 
 | Name        | Email                | Skype            | Facebook      |
-| ----------- | -------------------- | ---------------- | ------------- |
+|-------------|----------------------|------------------|---------------|
 | Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |

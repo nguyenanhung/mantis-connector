@@ -26,12 +26,32 @@ if (!function_exists('mantis_report')) {
     function mantis_report(array $config = array(), string $summary = 'Bug', string $desc = 'Bug', string $category = 'General', int $priority = 40, int $severity = 60): bool
     {
         $base = new nguyenanhung\MantisBT\MantisConnector();
-        $base->setMonitorUrl($config['monitorUrl'])
-             ->setMonitorUser($config['monitorUser'])
-             ->setMonitorPassword($config['monitorPassword'])
-             ->setProjectId($config['monitorProjectId'])
-             ->setUsername($config['monitorUsername']);
+        $base->setMonitorUrl($config['monitorUrl'])->setMonitorUser($config['monitorUser'])->setMonitorPassword($config['monitorPassword'])->setProjectId($config['monitorProjectId'])->setUsername($config['monitorUsername']);
 
         return $base->mantis($summary, $desc, $category, $priority, $severity);
+    }
+}
+if (!function_exists('setup_mantis_bug_tracker')) {
+    /**
+     * Function setup_mantis_bug_tracker
+     *
+     * @param array $options Mảng cấu hình Monitor
+     *
+     * @return \nguyenanhung\MantisBT\MantisConnector
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 07/03/2023 49:57
+     */
+    function setup_mantis_bug_tracker($options = array())
+    {
+        $mantis = new nguyenanhung\MantisBT\MantisConnector();
+        $mantis->setMonitorUrl($options['monitorUrl']);
+        $mantis->setMonitorUser($options['monitorUser']);
+        $mantis->setMonitorPassword($options['monitorPassword']);
+        $mantis->setProjectId($options['monitorProjectId']);
+        $mantis->setUsername($options['monitorUsername']);
+        $mantis->__construct();
+
+        return $mantis;
     }
 }
